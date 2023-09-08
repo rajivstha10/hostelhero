@@ -40,6 +40,13 @@ dependencies:
   qrscan: ^0.3.3 
   permission_handler: ^10.4.3
   qr_flutter: ^4.1.0
+  cloud_firestore: ^4.9.1
+  firebase_auth: ^4.9.0
+  firebase_core: ^2.15.1
+  
+  
+
+
 
 dev_dependencies:
   flutter_test:
