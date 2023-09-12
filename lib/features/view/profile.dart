@@ -1,12 +1,30 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hostelhero/dashboard/request.dart';
 import 'package:hostelhero/features/logs/login.dart';
 import 'package:hostelhero/profile_elements/edit_profile.dart';
+import 'package:hostelhero/profile_elements/image.dart';
 import 'package:hostelhero/profile_elements/settings.dart';
+import 'package:image_picker/image_picker.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
 
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  Uint8List? _image;
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -16,12 +34,26 @@ class Profile extends StatelessWidget {
             padding: EdgeInsets.all(10),
             child: Row(
               children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage(
-                    "assets/profile.jpg",
-                  ),
-                  radius: 80,
-                ),
+                Stack(children: [
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 80,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
+                          ),
+                          radius: 80,
+                          backgroundColor: Colors.transparent,
+                        ),
+                  Positioned(
+                    child: IconButton(
+                        onPressed: selectImage, icon: Icon(Icons.add_a_photo)),
+                    bottom: -10,
+                    left: 100,
+                  )
+                ]),
                 Expanded(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
