@@ -1,11 +1,13 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hostelhero/dashboard/request.dart';
 import 'package:hostelhero/features/logs/login.dart';
+import 'package:hostelhero/main.dart';
 import 'package:hostelhero/profile_elements/edit_profile.dart';
-import 'package:hostelhero/profile_elements/image.dart';
 import 'package:hostelhero/profile_elements/settings.dart';
-import 'package:image_picker/image_picker.dart';
+
+void main() async {
+  runApp(const MyApp());
+}
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -15,16 +17,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Uint8List? _image;
-
-  void selectImage() async {
-    Uint8List img = await pickImage(ImageSource.gallery);
-    setState(() {
-      _image = img;
-    });
-  }
-
-  @override
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -35,24 +27,13 @@ class _ProfileState extends State<Profile> {
             child: Row(
               children: [
                 Stack(children: [
-                  _image != null
-                      ? CircleAvatar(
-                          radius: 80,
-                          backgroundImage: MemoryImage(_image!),
-                        )
-                      : CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
-                          ),
-                          radius: 80,
-                          backgroundColor: Colors.transparent,
-                        ),
-                  Positioned(
-                    child: IconButton(
-                        onPressed: selectImage, icon: Icon(Icons.add_a_photo)),
-                    bottom: -10,
-                    left: 100,
-                  )
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
+                    ),
+                    radius: 80,
+                    backgroundColor: Colors.transparent,
+                  ),
                 ]),
                 Expanded(
                     child: Column(

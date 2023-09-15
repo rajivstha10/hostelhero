@@ -40,10 +40,11 @@ class IdCard extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Image.asset(
-                        "assets/profile.jpg",
+                      Image.network(
+                        "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
                         height: 150,
                       ),
+
                       SizedBox(
                         height: 10,
                       ),

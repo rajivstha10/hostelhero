@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hostelhero/features/view/profile.dart';
+import 'package:hostelhero/main.dart';
+import 'package:hostelhero/settings/change_password.dart';
+import 'package:hostelhero/settings/profile_image.dart';
 
-import '../features/view/profile.dart';
+void main() async {
+  runApp(const MyApp());
+}
 
-class Settings extends StatelessWidget {
+class Settings extends StatefulWidget {
   const Settings({super.key});
 
+  @override
+  State<Settings> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,73 +29,70 @@ class Settings extends StatelessWidget {
         backgroundColor: Colors.indigo.shade900,
         title: Center(child: Text("Settings")),
       ),
-      body: SafeArea(
-          child: Padding(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Text("Current Password:"),
-              ],
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                hintText: "Enter Current Password",
+      body: ListView(
+        children: [
+          //For change profile image
+          SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 4,
+              shadowColor: Colors.black,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      "Change Profile Image",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text("Change your profile image."),
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileImage()));
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Text("New Password:"),
-              ],
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                hintText: "Enter New Password",
+          ),
+          //For change password
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 4,
+              shadowColor: Colors.black,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      "Change Password",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    subtitle: Text("Change your PAssword."),
+                    trailing: Icon(Icons.chevron_right),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword()));
+                    },
+                  ),
+                ],
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Text("Confirm Password:"),
-              ],
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                filled: true,
-                hintText: "Enter Confirm Password",
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final snackBar = SnackBar(
-                  content: Text("Password changed successfully!"),
-                  backgroundColor: Colors.green,
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              },
-              child: Text(
-                "Submit",
-                style: TextStyle(fontSize: 18),
-              ),
-            )
-          ],
-        ),
-      )),
+          ),
+        ],
+      ),
     );
   }
 }
