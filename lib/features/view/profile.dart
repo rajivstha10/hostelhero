@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelhero/dashboard/request.dart';
 import 'package:hostelhero/features/logs/login.dart';
@@ -17,6 +19,48 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  String imageUrl = '';
+  String name = '';
+  String phone = '';
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the image URL when the widget initializes
+    _fetchImageUrl();
+    _fetchUserProfile();
+  }
+
+  Future<void> _fetchImageUrl() async {
+    try {
+      final String downloadURL = await FirebaseStorage.instance
+          .refFromURL('gs://hostel-hero.appspot.com/ProfileImage/id')
+          .getDownloadURL();
+
+      setState(() {
+        imageUrl = downloadURL;
+      });
+    } catch (e) {
+      print('Error fetching image URL: $e');
+    }
+  }
+
+  Future<void> _fetchUserProfile() async {
+    try {
+      final userID =
+          'o83iVhk1F3SVpLfc7uwuOVdljc72'; // Replace with the current user's ID
+      final userDoc =
+          FirebaseFirestore.instance.collection('profiles').doc(userID);
+      final userData = await userDoc.get();
+
+      setState(() {
+        name = userData['name'] ?? '';
+        phone = userData['phone'] ?? '';
+      });
+    } catch (e) {
+      print('Error fetching user profile: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -27,13 +71,18 @@ class _ProfileState extends State<Profile> {
             child: Row(
               children: [
                 Stack(children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
-                    ),
-                    radius: 80,
-                    backgroundColor: Colors.transparent,
-                  ),
+                  imageUrl == null
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              'https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg'),
+                          radius: 80,
+                          backgroundColor: Colors.transparent,
+                        )
+                      : CircleAvatar(
+                          backgroundImage: NetworkImage(imageUrl),
+                          radius: 80,
+                          backgroundColor: Colors.transparent,
+                        ),
                 ]),
                 Expanded(
                     child: Column(
@@ -41,7 +90,7 @@ class _ProfileState extends State<Profile> {
                   children: [
                     RichText(
                         text: TextSpan(
-                      text: 'Rajiv Shrestha',
+                      text: name,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -146,8 +195,8 @@ class _ProfileState extends State<Profile> {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Settings()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Settings_profile()));
           },
           child: Container(
               child: Card(

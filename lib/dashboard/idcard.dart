@@ -1,10 +1,61 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../features/bottomnav/bottom_navbar.dart';
 
-class IdCard extends StatelessWidget {
+class IdCard extends StatefulWidget {
   const IdCard({super.key});
+
+  @override
+  State<IdCard> createState() => _IdCardState();
+}
+
+class _IdCardState extends State<IdCard> {
+  String imageUrl = '';
+  String name = '';
+  String phone = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the image URL when the widget initializes
+    _fetchImageUrl();
+    _fetchUserProfile();
+  }
+
+  Future<void> _fetchImageUrl() async {
+    try {
+      final String downloadURL = await FirebaseStorage.instance
+          .refFromURL('gs://hostel-hero.appspot.com/ProfileImage/id')
+          .getDownloadURL();
+
+      setState(() {
+        imageUrl = downloadURL;
+      });
+    } catch (e) {
+      print('Error fetching image URL: $e');
+    }
+  }
+
+  //for fetching data from database
+  Future<void> _fetchUserProfile() async {
+    try {
+      final userID =
+          'o83iVhk1F3SVpLfc7uwuOVdljc72'; // Replace with the current user's ID
+      final userDoc =
+          FirebaseFirestore.instance.collection('profiles').doc(userID);
+      final userData = await userDoc.get();
+
+      setState(() {
+        name = userData['name'] ?? '';
+        phone = userData['phone'] ?? '';
+      });
+    } catch (e) {
+      print('Error fetching user profile: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +91,22 @@ class IdCard extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      Image.network(
-                        "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
-                        height: 150,
-                      ),
+                      imageUrl == null
+                          ? Image.network(
+                              "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
+                              height: 150,
+                            )
+                          : Image.network(
+                              imageUrl,
+                              height: 150,
+                            ),
 
                       SizedBox(
                         height: 10,
                       ),
                       RichText(
                           text: TextSpan(
-                              text: "Rajiv Shrestha",
+                              text: name,
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -64,7 +120,7 @@ class IdCard extends StatelessWidget {
                                   color: Colors.black))),
                       RichText(
                           text: TextSpan(
-                              text: "9813270136",
+                              text: phone,
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,

@@ -8,14 +8,14 @@ void main() async {
   runApp(const MyApp());
 }
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class Settings_profile extends StatefulWidget {
+  const Settings_profile({super.key});
 
   @override
-  State<Settings> createState() => _ProfileState();
+  State<Settings_profile> createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Settings> {
+class _ProfileState extends State<Settings_profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +27,7 @@ class _ProfileState extends State<Settings> {
             },
             icon: Icon(Icons.arrow_back)),
         backgroundColor: Colors.indigo.shade900,
-        title: Center(child: Text("Settings")),
+        title: Center(child: Text("Settings_profile")),
       ),
       body: ListView(
         children: [

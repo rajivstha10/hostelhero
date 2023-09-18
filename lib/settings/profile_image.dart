@@ -1,17 +1,10 @@
 import 'dart:typed_data';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:hostelhero/features/view/profile.dart';
-import 'package:hostelhero/main.dart';
 import 'package:hostelhero/profile_elements/image.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:hostelhero/resources/add_data.dart';
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
-}
+import 'package:hostelhero/features/view/profile.dart';
 
 class ProfileImage extends StatefulWidget {
   const ProfileImage({super.key});
@@ -21,7 +14,30 @@ class ProfileImage extends StatefulWidget {
 }
 
 class _ProfileImageState extends State<ProfileImage> {
+  String imageUrl = ''; //image url is emptty atthis moment
   Uint8List? _image;
+
+//get image
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the image URL when the widget initializes
+    _fetchImageUrl();
+  }
+
+  Future<void> _fetchImageUrl() async {
+    try {
+      final String downloadURL = await FirebaseStorage.instance
+          .refFromURL('gs://hostel-hero.appspot.com/ProfileImage/id')
+          .getDownloadURL();
+
+      setState(() {
+        imageUrl = downloadURL; //downloaded url is in image Url
+      });
+    } catch (e) {
+      print('Error fetching image URL: $e');
+    }
+  }
 
   void selectImage() async {
     Uint8List img = await pickImage(ImageSource.gallery);
@@ -61,9 +77,7 @@ class _ProfileImageState extends State<ProfileImage> {
                           backgroundImage: MemoryImage(_image!),
                         )
                       : CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
-                          ),
+                          backgroundImage: NetworkImage(imageUrl),
                           radius: 80,
                           backgroundColor: Colors.transparent,
                         ),
@@ -86,4 +100,3 @@ class _ProfileImageState extends State<ProfileImage> {
     );
   }
 }
-
