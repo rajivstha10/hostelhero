@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hostelhero/features/view/calendar.dart';
 import 'package:hostelhero/features/view/homepage.dart';
@@ -17,22 +18,34 @@ class _BottomNavBarState extends State<BottomNavBar>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
 
-  Future _qrScanner() async {
+  Future<void> _qrScanner() async {
     var cameraStatus = await Permission.camera.status;
 
     if (cameraStatus.isGranted) {
       String? qrdata = await scanner.scan();
-      return qrdata;
+      if (qrdata != null) {
+        // Create a Firestore reference
+        CollectionReference qrDataCollection =
+            FirebaseFirestore.instance.collection('qrData');
+
+        // Store the scanned data in Firestore
+        await qrDataCollection.add({'data': qrdata});
+      }
     } else {
       var isGrant = await Permission.camera.request();
 
       if (isGrant.isGranted) {
         String? qrdata = await scanner.scan();
-        return qrdata;
+        if (qrdata != null) {
+          // Create a Firestore reference
+          CollectionReference qrDataCollection =
+              FirebaseFirestore.instance.collection('qrData');
+
+          // Store the scanned data in Firestore
+          await qrDataCollection.add({'data': qrdata});
+        }
       }
     }
-
-    //String? qrdataphoto = await scanner.scanPhoto(); <=to open gallery and selevt qr
   }
 
   int index = 0;

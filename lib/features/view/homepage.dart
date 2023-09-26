@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hostelhero/dashboard/idcard.dart';
+import 'package:hostelhero/dashboard/inout.dart';
 import 'package:hostelhero/dashboard/request.dart';
 import 'package:hostelhero/dashboard/room.dart';
 import 'package:hostelhero/dashboard/routine.dart';
@@ -57,7 +58,10 @@ class _DashboardState extends State<Dashboard>
               ),
               //For INOUT
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => QRDataPage()));
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
