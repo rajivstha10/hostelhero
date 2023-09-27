@@ -54,7 +54,7 @@ class _BottomNavBarState extends State<BottomNavBar>
     //Screens boottom navbar eg: eventspage()
     Dashboard(),
     Calendar(),
-    Notice(),
+    // Notice(),
     Profile()
   ];
 
@@ -68,13 +68,13 @@ class _BottomNavBarState extends State<BottomNavBar>
         ),
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.notifications_outlined,
-              color: Colors.black,
-            ),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: Icon(
+          //     Icons.notifications_outlined,
+          //     color: Colors.black,
+          //   ),
+          // ),
           IconButton(
               onPressed: () {
                 setState(() {
@@ -117,18 +117,18 @@ class _BottomNavBarState extends State<BottomNavBar>
               ),
               NavigationDestination(
                   icon: Icon(
-                    Icons.event_outlined,
+                    Icons.calendar_month_outlined,
                     color: Colors.white,
                   ),
-                  selectedIcon: Icon(Icons.event),
-                  label: 'Events'),
-              NavigationDestination(
-                  icon: Icon(
-                    Icons.mark_email_unread_outlined,
-                    color: Colors.white,
-                  ),
-                  selectedIcon: Icon(Icons.mark_email_unread),
-                  label: 'Notice'),
+                  selectedIcon: Icon(Icons.calendar_month),
+                  label: 'Calendar'),
+              // NavigationDestination(
+              //     icon: Icon(
+              //       Icons.mark_email_unread_outlined,
+              //       color: Colors.white,
+              //     ),
+              //     selectedIcon: Icon(Icons.mark_email_unread),
+              //     label: 'Notice'),
               NavigationDestination(
                   icon: Icon(
                     Icons.person_2_outlined,

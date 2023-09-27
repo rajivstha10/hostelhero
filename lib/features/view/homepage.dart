@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hostelhero/dashboard/fee.dart';
 import 'package:hostelhero/dashboard/idcard.dart';
 import 'package:hostelhero/dashboard/inout.dart';
 import 'package:hostelhero/dashboard/request.dart';
@@ -140,32 +141,10 @@ class _DashboardState extends State<Dashboard>
                   ),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.grey,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      FontAwesomeIcons.moneyBill1,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    Text(
-                      "Fees",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                    )
-                  ],
-                ),
-              ),
-              //For Room
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: ((context) => Room())));
+                      MaterialPageRoute(builder: (context) => FeeListPage()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -176,12 +155,12 @@ class _DashboardState extends State<Dashboard>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.door_front_door_outlined,
+                        FontAwesomeIcons.moneyBill1,
                         size: 50,
                         color: Colors.black,
                       ),
                       Text(
-                        "Room",
+                        "Fees",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30),
                       )
@@ -189,6 +168,34 @@ class _DashboardState extends State<Dashboard>
                   ),
                 ),
               ),
+              //For Room
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: ((context) => Room())));
+              //   },
+              //   child: Container(
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(20),
+              //       color: Colors.grey,
+              //     ),
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Icon(
+              //           Icons.door_front_door_outlined,
+              //           size: 50,
+              //           color: Colors.black,
+              //         ),
+              //         Text(
+              //           "Room",
+              //           style: TextStyle(
+              //               fontWeight: FontWeight.bold, fontSize: 30),
+              //         )
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
