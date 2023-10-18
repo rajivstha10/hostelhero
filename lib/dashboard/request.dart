@@ -59,7 +59,7 @@ class _RequestState extends State<Request> {
               TextFormField(
                 controller: requestController,
                 maxLength: 1000,
-                maxLines: 10,
+                maxLines: 9,
                 decoration: InputDecoration(
                   filled: true,
                   hintText: "Describe your Request here...",
@@ -69,7 +69,7 @@ class _RequestState extends State<Request> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 2,
               ),
               ElevatedButton(
                 onPressed: () async {

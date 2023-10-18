@@ -6,7 +6,7 @@ class QRDataPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Data'),
+        title: Center(child: Text('In-Out')),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('qrData').snapshots(),
