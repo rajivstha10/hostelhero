@@ -91,6 +91,7 @@ class _IdCardState extends State<IdCard> {
                       SizedBox(
                         height: 10,
                       ),
+                      // ignore: unnecessary_null_comparison
                       imageUrl == null
                           ? Image.network(
                               "https://www.rumahsoal.id/storage/testimoni/January2021/AKkp5i6jZFbuxyDcPsoy.jpg",
