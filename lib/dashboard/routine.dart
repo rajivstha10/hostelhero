@@ -34,7 +34,7 @@ class Routine extends StatelessWidget {
                 DataColumn(
                     label: Text(
                   'Description',
-                  style: TextStyle(fontWeight: FontWeight.bold  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 )),
               ],
               rows: [
